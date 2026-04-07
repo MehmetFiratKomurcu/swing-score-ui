@@ -1,6 +1,13 @@
 # Swing Score UI
 
-Vite + React + TypeScript front end for the Swing Score competition app (Tailwind, TanStack Query, React Router). The **Go API is a separate repository** — run or deploy it independently and set `VITE_API_URL` to that API’s origin.
+Vite + React + TypeScript front end for the Swing Score competition app (Tailwind, TanStack Query, React Router).
+
+| | |
+|--|--|
+| **This repo** | [github.com/MehmetFiratKomurcu/swing-score-ui](https://github.com/MehmetFiratKomurcu/swing-score-ui) |
+| **Backend (Go API)** | [github.com/MehmetFiratKomurcu/swing-score-api](https://github.com/MehmetFiratKomurcu/swing-score-api) |
+
+Clone and run the API separately, then point this app at it with `VITE_API_URL` (build time for production).
 
 ## Prerequisites
 
