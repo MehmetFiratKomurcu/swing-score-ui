@@ -245,9 +245,25 @@ export default function PrelimScoringPage() {
       if (type === "yes") {
         next.yes = [...e.yes];
         next.yes[index] = { number: trimmed, displayName, roleMismatch };
+        // A competitor cannot be both YES and ALT for the same judge.
+        if (trimmed) {
+          next.alt = (e.alt ?? []).map((cell) =>
+            cell?.number?.trim() === trimmed
+              ? { number: "", displayName: null, roleMismatch: null }
+              : cell
+          );
+        }
       } else {
         next.alt = [...e.alt];
         next.alt[index] = { number: trimmed, displayName, roleMismatch };
+        // A competitor cannot be both YES and ALT for the same judge.
+        if (trimmed) {
+          next.yes = (e.yes ?? []).map((cell) =>
+            cell?.number?.trim() === trimmed
+              ? { number: "", displayName: null, roleMismatch: null }
+              : cell
+          );
+        }
       }
       return { ...prev, [judgeId]: next };
     });
@@ -282,6 +298,14 @@ export default function PrelimScoringPage() {
           toast.error("Enter a valid competitor or pair number for each filled slot.");
           return;
         }
+      }
+
+      // Guardrail: prevent the same competitor being both YES and ALT.
+      const yesSet = new Set(e.yes.map((c) => c.number.trim()).filter(Boolean));
+      const overlap = e.alt.map((c) => c.number.trim()).filter(Boolean).find((n) => yesSet.has(n));
+      if (overlap) {
+        toast.error(`Competitor #${overlap} cannot be both YES and ALT.`);
+        return;
       }
     }
 

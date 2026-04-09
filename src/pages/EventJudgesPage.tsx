@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Gavel } from "lucide-react";
@@ -38,6 +38,7 @@ import {
 export default function EventJudgesPage() {
   const { eventId } = useParams<{ eventId: string }>();
   const queryClient = useQueryClient();
+  const addJudgeFormRef = useRef<HTMLFormElement | null>(null);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -196,18 +197,42 @@ export default function EventJudgesPage() {
           <CardTitle>Add judge</CardTitle>
           <CardDescription>Add a judge to this event. Then assign them to competitions from the competition Judges page.</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-4 items-end">
-          <div className="space-y-2 flex-1 min-w-[140px]">
-            <Label>Name</Label>
-            <Input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Judge name" />
-          </div>
-          <div className="space-y-2 flex-1 min-w-[140px]">
-            <Label>Email (optional)</Label>
-            <Input value={newEmail} onChange={(e) => setNewEmail(e.target.value)} type="email" placeholder="email@example.com" />
-          </div>
-          <Button onClick={handleAdd} disabled={!newName.trim() || createMutation.isPending}>
-            {createMutation.isPending ? "Adding…" : "Add judge"}
-          </Button>
+        <CardContent>
+          <form
+            ref={addJudgeFormRef}
+            className="flex flex-wrap gap-4 items-end"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleAdd();
+            }}
+          >
+            <div className="space-y-2 flex-1 min-w-[140px]">
+              <Label>Name</Label>
+              <Input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") addJudgeFormRef.current?.requestSubmit();
+                }}
+                placeholder="Judge name"
+              />
+            </div>
+            <div className="space-y-2 flex-1 min-w-[140px]">
+              <Label>Email (optional)</Label>
+              <Input
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") addJudgeFormRef.current?.requestSubmit();
+                }}
+                type="email"
+                placeholder="email@example.com"
+              />
+            </div>
+            <Button type="submit" disabled={!newName.trim() || createMutation.isPending}>
+              {createMutation.isPending ? "Adding…" : "Add judge"}
+            </Button>
+          </form>
         </CardContent>
         {createMutation.error && (
           <CardContent className="pt-0 text-sm text-destructive">
