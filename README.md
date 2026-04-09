@@ -7,7 +7,7 @@ Vite + React + TypeScript front end for the Swing Score competition app (Tailwin
 | **This repo** | [github.com/MehmetFiratKomurcu/swing-score-ui](https://github.com/MehmetFiratKomurcu/swing-score-ui) |
 | **Backend (Go API)** | [github.com/MehmetFiratKomurcu/swing-score-api](https://github.com/MehmetFiratKomurcu/swing-score-api) |
 
-Clone and run the API separately, then point this app at it with `VITE_API_URL` (build time for production).
+Clone and run the API separately, then point this app at it with `VITE_API_URL` (build time for production environment).
 
 ## Prerequisites
 
