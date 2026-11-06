@@ -233,24 +233,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-        <div className="mx-auto max-w-lg rounded-2xl border border-border bg-card p-8 text-center shadow-lg">
-          <h2 className="font-display text-2xl font-semibold">Pricing</h2>
-          <p className="mt-2 text-4xl font-bold tracking-tight text-primary">$5</p>
-          <p className="text-sm font-medium text-muted-foreground">per competition (division)</p>
-          <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-            There is no self-service signup. After payment, we create your account and you sign in with the credentials
-            we send you. Use &quot;Get access&quot; below to reach us.
-          </p>
-          <Button className="mt-6" asChild>
-            <a href={mailtoHref}>
-              <Mail className="mr-2 h-4 w-4" aria-hidden />
-              Email to get access
-            </a>
-          </Button>
-        </div>
-      </section>
-
       <footer className="border-t border-border bg-muted/20">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-10 sm:flex-row">
           <div className="text-center sm:text-left">
